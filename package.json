@@ -1,6 +1,6 @@
 {
   "name": "simple-firestore",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Simple module to easily interact with Firestore, with optional caching!",
   "main": "src/index.js",
   "keywords": [
@@ -26,5 +26,9 @@
     "firebase": "^9.10.0",
     "object-path": "^0.11.8",
     "redis": "^4.3.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/itsgox/simple-firestore/issues"
+  },
+  "homepage": "https://github.com/itsgox/simple-firestore"
 }
