@@ -7,7 +7,7 @@ function getMethods(db, redis, useCache, cacheTTL) {
 
     async function set(path, field, value, customTTL) {
 
-        customTTL = customTTL ? customTTL : 0
+        customTTL = customTTL ? typeof customTTL === 'number' ? customTTL : 0 : 0
 
         try {
             // Settings
