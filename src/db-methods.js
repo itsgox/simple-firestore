@@ -1,7 +1,7 @@
 const { collection: collection_, getDoc, setDoc, doc, deleteDoc: deleteDoc_ } = require('@firebase/firestore')
 const objectPath = require("object-path")
 
-function getMethods(db, redis, useCache, cacheTTL) {
+function getMethods(db, redis, useCache, cacheTTL, cachePrefix) {
 
     // --------------------- Set ---------------------
 
@@ -42,7 +42,7 @@ function getMethods(db, redis, useCache, cacheTTL) {
                 }
                 else cachedData = value
                 cachedData = JSON.stringify(cachedData)
-                await redis.setEx(path, customTTL > 0 ? customTTL : cacheTTL, cachedData)
+                await redis.setEx(`${cachePrefix ? `${cachePrefix}_` : ''}${path}`, customTTL > 0 ? customTTL : cacheTTL, cachedData)
             }
 
             return true
@@ -96,7 +96,7 @@ function getMethods(db, redis, useCache, cacheTTL) {
 
                     // Save to Cache
 
-                    if (useCache) await redis.setEx(path, cacheTTL, JSON.stringify(data))
+                    if (useCache) await redis.setEx(`${cachePrefix ? `${cachePrefix}_` : ''}${path}`, cacheTTL, JSON.stringify(data))
 
                     // Field
 
@@ -108,7 +108,7 @@ function getMethods(db, redis, useCache, cacheTTL) {
 
                         // Set Field Status
 
-                        if (useCache) await redis.setEx(`${path}_${field}_status`, cacheTTL, JSON.stringify(true))
+                        if (useCache) await redis.setEx(`${cachePrefix ? `${cachePrefix}_` : ''}${path}_${field}_status`, cacheTTL, JSON.stringify(true))
                     }
                 }
             }

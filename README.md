@@ -43,6 +43,7 @@ async function example() {
         },
         useCache: true, 
         cacheTTL: 60*2, // seconds
+        cachePrefix: "bot" // optional
         logs: true
     })
 }
@@ -55,6 +56,7 @@ example()
 - **credentials**: these are the values you copy from your Firebase App
 - **useCache**: enabling this option will use Redis to cache the data you're getting from Firebase, in order to avoid high amounts of reads on your database
 - **cacheTTL**: the amount of time the data stays stored in cache (in seconds), this can be helpful for ensuring we don't waste resources on data that is not accessed often.
+- **cachePrefix**: this is useful if you're running different projects in the same Redis server, and want each project to have their own cache prefix
 - **logs**: receive logs on your terminal
 
 ## Methods

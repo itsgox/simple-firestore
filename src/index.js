@@ -3,7 +3,7 @@ const { getFirestore } = require('@firebase/firestore')
 const { createClient } = require('redis')
 const getMethods = require('./db-methods')
 
-async function SimpleFirestore({ credentials, useCache, cacheTTL, logs }) {
+async function SimpleFirestore({ credentials, useCache, cacheTTL, cachePrefix, logs }) {
 
     // Check Values
     
@@ -31,7 +31,7 @@ async function SimpleFirestore({ credentials, useCache, cacheTTL, logs }) {
 
     // Start Database
 
-    return getMethods(firestore, redis, useCache, cacheTTL)
+    return getMethods(firestore, redis, useCache, cacheTTL, cachePrefix)
 }
 
 module.exports = SimpleFirestore
