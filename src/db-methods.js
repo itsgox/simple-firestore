@@ -34,11 +34,11 @@ function getMethods(db, redis, useCache, cacheTTL, cachePrefix) {
 
                 // Save to Cache
 
-                let cachedData = await redis.get(path) || '{}'
+                let cachedData = await redis.get(`${cachePrefix ? `${cachePrefix}_` : ''}${path}`) || '{}'
                 cachedData = JSON.parse(cachedData)
                 if (field && field !== '') {
                     objectPath.set(cachedData, field, value)
-                    await redis.del(`${path}_${field}_status`)
+                    await redis.del(`${cachePrefix ? `${cachePrefix}_` : ''}${path}_${field}_status`)
                 }
                 else cachedData = value
                 cachedData = JSON.stringify(cachedData)
@@ -64,14 +64,14 @@ function getMethods(db, redis, useCache, cacheTTL, cachePrefix) {
 
                 // Get Data
 
-                data = await redis.get(path)
+                data = await redis.get(`${cachePrefix ? `${cachePrefix}_` : ''}${path}`)
                 data = JSON.parse(data)
                 if (field && field !== '') data = objectPath.get(data, field)
 
                 // Check Field Status
 
                 if (field && field !== '') {
-                    fieldStatus = await redis.get(`${path}_${field}_status`)
+                    fieldStatus = await redis.get(`${cachePrefix ? `${cachePrefix}_` : ''}${path}_${field}_status`)
                     fieldStatus = JSON.parse(fieldStatus)
                 }
             }

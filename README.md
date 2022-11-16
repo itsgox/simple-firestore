@@ -43,7 +43,7 @@ async function example() {
         },
         useCache: true, 
         cacheTTL: 60*2, // seconds
-        cachePrefix: "bot" // optional
+        cachePrefix: "bot",
         logs: true
     })
 }
