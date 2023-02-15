@@ -1,4 +1,4 @@
-const { initializeApp } = require('firebase/app')
+const { initializeApp, getApps } = require('firebase/app')
 const { getFirestore } = require('@firebase/firestore')
 const { createClient } = require('redis')
 const getMethods = require('./db-methods')
@@ -14,7 +14,9 @@ async function SimpleFirestore({ credentials, useCache, cacheTTL, cachePrefix, l
 
     // Connect to Firebase
 
-    const app = initializeApp(credentials)
+    const apps = getApps();
+
+    const app = apps.length >= 1 ? initializeApp(credentials, `NEW_${apps.length}`) : initializeApp(credentials)
     const firestore = getFirestore(app)
 
     if (logs) console.log('Connected to Firestore!')
